@@ -122,17 +122,16 @@ If you want to boot your compiled kernel on a real machine (not just in QEMU), f
 ### 🗂️ 1. Copy the Kernel and Initramfs
 
 After building the kernel, copy the image to `/boot`:
-
-```bash
-sudo cp arch/x86/boot/bzImage /boot/vmlinuz-custom
-```
-
-You may also want to copy or generate an initramfs (required for most modern systems):
 > Install module firts
 ```
 sudo make modules_install
 ```
 > Then, run :
+```bash
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-custom
+```
+
+You may also want to copy or generate an initramfs (required for most modern systems):
 
 ```bash
 sudo mkinitcpio -k $(make kernelrelease) -g /boot/initramfs-custom.img
