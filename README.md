@@ -128,6 +128,11 @@ sudo cp arch/x86/boot/bzImage /boot/vmlinuz-custom
 ```
 
 You may also want to copy or generate an initramfs (required for most modern systems):
+> Install module firts
+```
+sudo make modules_install
+```
+> Then, run :
 
 ```bash
 sudo mkinitcpio -k $(make kernelrelease) -g /boot/initramfs-custom.img
