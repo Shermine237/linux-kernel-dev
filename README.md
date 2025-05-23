@@ -111,3 +111,64 @@ make mrproper     # Remove all generated files including .config
 ---
 
 Happy hacking! 🐧
+
+
+## 🧷 Step 7: Boot Your Custom Kernel at Startup
+
+If you want to boot your compiled kernel on a real machine (not just in QEMU), follow these steps carefully. This involves installing your custom kernel and configuring your bootloader.
+
+> ⚠️ WARNING: Do this only if you know what you're doing. Incorrect configuration can make your system unbootable. Use a virtual machine or secondary system for testing.
+
+### 🗂️ 1. Copy the Kernel and Initramfs
+
+After building the kernel, copy the image to `/boot`:
+
+```bash
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-custom
+```
+
+You may also want to copy or generate an initramfs (required for most modern systems):
+
+```bash
+sudo mkinitcpio -k $(make kernelrelease) -g /boot/initramfs-custom.img
+```
+
+### ⚙️ 2. Update Bootloader (GRUB Example)
+
+If you're using GRUB (default on Arch), add a menu entry manually:
+
+1. Edit the GRUB configuration file:
+
+```bash
+sudo vim /etc/grub.d/40_custom
+```
+
+2. Add an entry like this:
+
+```bash
+menuentry 'Custom Linux Kernel' {
+    insmod ext2
+    set root='hd0,msdos1'
+    linux /boot/vmlinuz-custom root=/dev/sdX ro quiet
+    initrd /boot/initramfs-custom.img
+}
+```
+
+> Replace `/dev/sdX` with your actual root partition (e.g., `/dev/sda2`).
+
+3. Regenerate the GRUB configuration:
+
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### 🚀 3. Reboot and Choose the Kernel
+
+On reboot, the GRUB menu should show the new entry “Custom Linux Kernel”. Use the arrow keys to select it and boot.
+
+---
+
+## 🧯 Tip: Always Keep a Working Kernel Entry
+
+Keep your original kernel entry intact in GRUB in case the custom one fails to boot. This gives you a fallback option.
+
