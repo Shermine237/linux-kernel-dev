@@ -152,7 +152,7 @@ sudo vim /etc/grub.d/40_custom
 ```bash
 menuentry 'Custom Linux Kernel' {
     insmod ext2
-    set root='hd0,msdos1'
+    set root=(hd0,2)
     linux /boot/vmlinuz-custom root=/dev/sdX ro quiet
     initrd /boot/initramfs-custom.img
 }
