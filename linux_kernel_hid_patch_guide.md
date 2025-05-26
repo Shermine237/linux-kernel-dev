@@ -113,7 +113,7 @@ sudo insmod drivers/hid/hid.ko  # Load modified module
 
 ### c. Verify the Message
 ```bash
-dmesg | grep HID
+sudo dmesg | grep HID
 ```
 
 Look for your log message: `[HID] Device successfully connected`
