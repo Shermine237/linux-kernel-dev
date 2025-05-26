@@ -97,6 +97,10 @@ CONFIG_HID=m
 ```
 This builds the HID driver as a module for easier testing.
 
+> Update config :
+```bash
+make olddefconfig
+```
 ---
 
 ## 8. Build and Test Only the Module
