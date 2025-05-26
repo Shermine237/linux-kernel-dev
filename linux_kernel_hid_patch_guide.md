@@ -78,6 +78,7 @@ Locate the appropriate place inside `hid_connect()` or another relevant function
 ## 7. Configure the Kernel
 
 ```bash
+make mrproper
 make defconfig
 make menuconfig
 ```
