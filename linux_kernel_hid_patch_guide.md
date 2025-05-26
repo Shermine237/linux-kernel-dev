@@ -103,7 +103,45 @@ make olddefconfig
 ```
 ---
 
-## 8. Build and Test Only the Module
+## 8. Build Full Kernel and Install
+
+Recompile the full kernel:
+
+```bash
+make -j$(nproc)
+sudo make modules_install
+sudo make install
+```
+
+Update your bootloader (GRUB is commonly used):
+
+```bash
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+---
+
+## 9. Boot and Test on New Kernel
+
+Reboot your machine and select the newly installed kernel from the boot menu.
+
+```bash
+uname -r  # Confirm the version matches your compiled kernel
+```
+
+Then verify the driver and changes:
+
+```bash
+dmesg | grep HID
+```
+
+You should see your custom log message if the built-in driver was executed.
+
+---
+## 10. Edit driver
+---
+
+## 11. Build and Test Only the Module
 
 ### a. Build the Module Only
 ```bash
@@ -125,7 +163,7 @@ Look for your log message: `[HID] Device successfully connected`
 
 ---
 
-## 9. Run Checkpatch
+## 12. Run Checkpatch
 
 ```bash
 ./scripts/checkpatch.pl --strict -f drivers/hid/hid-core.c
@@ -135,7 +173,7 @@ Fix any warnings or errors reported.
 
 ---
 
-## 10. Commit Your Change
+## 13. Commit Your Change
 
 ```bash
 git add drivers/hid/hid-core.c
@@ -146,7 +184,7 @@ The `-s` adds the `Signed-off-by` line required by the Linux kernel.
 
 ---
 
-## 11. Generate the Patch
+## 14. Generate the Patch
 
 ```bash
 git format-patch -1
@@ -156,7 +194,7 @@ This creates a file like `0001-HID-core-Add-log-message.patch`.
 
 ---
 
-## 12. Identify the Maintainers
+## 15. Identify the Maintainers
 
 ```bash
 ./scripts/get_maintainer.pl drivers/hid/hid-core.c
@@ -164,7 +202,7 @@ This creates a file like `0001-HID-core-Add-log-message.patch`.
 
 ---
 
-## 13. Configure Git Send-Email
+## 16. Configure Git Send-Email
 
 ```bash
 git config --global sendemail.smtpserver smtp.example.com
@@ -173,7 +211,7 @@ git config --global sendemail.smtpserver smtp.example.com
 
 ---
 
-## 14. Send the Patch
+## 17. Send the Patch
 
 ```bash
 git send-email --to maintainer@example.com --cc linux-input@vger.kernel.org --cc linux-kernel@vger.kernel.org 0001-HID-core-Add-log-message.patch
@@ -181,7 +219,7 @@ git send-email --to maintainer@example.com --cc linux-input@vger.kernel.org --cc
 
 ---
 
-## 15. Respond to Feedback
+## 18. Respond to Feedback
 
 Wait for feedback on the mailing list. If needed, revise your patch:
 
@@ -199,7 +237,7 @@ git send-email --to maintainer@example.com --cc linux-input@vger.kernel.org --cc
 
 ---
 
-## 16. Configure as Built-In (Optional)
+## 19. Configure as Built-In (Optional)
 
 If you want to compile the driver as built-in:
 
@@ -208,45 +246,7 @@ make menuconfig
 # Set CONFIG_HID=y
 ```
 
----
-
-## 17. Build Full Kernel and Install
-
-Recompile the full kernel:
-
-```bash
-make -j$(nproc)
-sudo make modules_install
-sudo make install
-```
-
-Update your bootloader (GRUB is commonly used):
-
-```bash
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
----
-
-## 18. Boot and Test on New Kernel
-
-Reboot your machine and select the newly installed kernel from the boot menu.
-
-```bash
-uname -r  # Confirm the version matches your compiled kernel
-```
-
-Then verify the driver and changes:
-
-```bash
-dmesg | grep HID
-```
-
-You should see your custom log message if the built-in driver was executed.
-
----
-
-## 19. Clean Up
+## 20. Clean Up
 
 After your patch is accepted, you can delete your branch:
 
