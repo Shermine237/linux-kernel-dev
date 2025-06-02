@@ -110,15 +110,29 @@ Recompile the full kernel:
 ```bash
 make -j$(nproc)
 sudo make modules_install
-sudo make install
 ```
 
-> It's normal to have this message : Cannot find LILO
+Install kernel :
+```bash
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-6.15.0-rc7+
+sudo cp System.map /boot/System.map-6.15.0-rc7+
+sudo cp .config /boot/config-6.15.0-rc7+
+```
+
+Generate an initramfs :
+```bash
+sudo mkinitcpio -k 6.15.0-rc7+ -g /boot/initramfs-6.15.0-rc7+.img
+```
 
 Update your bootloader (GRUB is commonly used):
 
 ```bash
 sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+Verif entry
+```bash
+grep menuentry /boot/grub/grub.cfg
 ```
 
 ---
