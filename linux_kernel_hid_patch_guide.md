@@ -113,6 +113,8 @@ sudo make modules_install
 sudo make install
 ```
 
+> It's normal to have this message : Cannot find LILO
+
 Update your bootloader (GRUB is commonly used):
 
 ```bash
