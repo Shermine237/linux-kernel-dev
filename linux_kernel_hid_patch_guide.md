@@ -121,7 +121,8 @@ sudo cp .config /boot/config-6.15.0-rc7+
 
 Generate an initramfs :
 ```bash
-sudo mkinitcpio -k 6.15.0-rc7+ -g /boot/initramfs-6.15.0-rc7+.img
+KVER=$(basename "$(ls -d /lib/modules/6.15.0-rc7-* | head -n1)")
+sudo mkinitcpio -k "$KVER" -g "/boot/initramfs-$KVER.img"
 ```
 
 Update your bootloader (GRUB is commonly used):
