@@ -133,7 +133,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 Verif entry
 ```bash
-grep menuentry /boot/grub/grub.cfg
+sudo grep menuentry /boot/grub/grub.cfg
 ```
 
 ---
