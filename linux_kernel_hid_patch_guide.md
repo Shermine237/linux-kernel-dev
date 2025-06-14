@@ -272,6 +272,13 @@ git checkout master
 git branch -D my-hid-feature
 ```
 
+## Uninstall customs kernels
+```bash
+sudo rm -v /boot/vmlinuz-6.15.0-rc7* /boot/initramfs-6.15.0-rc7* /boot/System.map-6.15.0-rc7* /boot/config-6.15.0-rc7*
+sudo rm -rv /lib/modules/6.15.0-rc7*
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+```
+
 ---
 
 ## Notes
