@@ -114,14 +114,14 @@ sudo make modules_install
 
 Install kernel :
 ```bash
-sudo cp arch/x86/boot/bzImage /boot/vmlinuz-6.15.0-rc7+
-sudo cp System.map /boot/System.map-6.15.0-rc7+
-sudo cp .config /boot/config-6.15.0-rc7+
+sudo cp arch/x86/boot/bzImage /boot/vmlinuz-$(make kernelrelease)
+sudo cp System.map /boot/System.map-$(make kernelrelease)
+sudo cp .config /boot/config-$(make kernelrelease)
 ```
 
 Generate an initramfs :
 ```bash
-KVER=$(basename "$(ls -d /lib/modules/6.15.0-rc7-* | head -n1)")
+KVER=$(make kernelrelease)
 sudo mkinitcpio -k "$KVER" -g "/boot/initramfs-$KVER.img"
 ```
 
